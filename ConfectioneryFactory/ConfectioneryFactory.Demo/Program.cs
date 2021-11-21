@@ -10,10 +10,11 @@
     {
         static void Main(string[] args)
         {
-            var product = new Product(1, "Сладкоежка", "Пончик", 100, 2000);
-            var ingredient = new Ingredient(1, "Мука", 70, 100);
+            var ingredient = new Ingredient(1, "Мука", 70);
+            var product = new Product(1, "Сладкоежка", "Пончик", 100, ingredient);
+            
 
-            Console.WriteLine($"{product} {ingredient}");
+            Console.WriteLine($"{product} \t {ingredient}");
         }
     }
 }
