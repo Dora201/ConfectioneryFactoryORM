@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentNHibernate" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ConfectioneryFactory.Staff\ConfectioneryFactory.Staff.csproj" />
   </ItemGroup>
 

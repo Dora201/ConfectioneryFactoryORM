@@ -17,6 +17,12 @@ namespace ConfectioneryFactory.Domain
             this.Price = price;
         }
 
+        [Obsolete("For ORM", true)]
+
+        protected Ingredient()
+        {
+        }
+
         public virtual int Id { get; protected set; }
         public virtual string Name { get; protected set; }
         public virtual int Price { get; protected set; }
@@ -29,5 +35,20 @@ namespace ConfectioneryFactory.Domain
         }
 
         public override string ToString() => $"{Id}) {Name} - {Price}";
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return Equals((Ingredient)obj);
+        }
+
+        /// <inheritdoc cref="IEquatable{T}">
+        public virtual bool Equals(Ingredient other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return this.Id == other.Id;
+        }
     }
 }
