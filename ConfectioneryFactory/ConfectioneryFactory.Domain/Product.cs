@@ -27,6 +27,12 @@ namespace ConfectioneryFactory.Domain
                 this.Ingredients.Add(ingredient);
         }
 
+        [Obsolete("For ORM", true)]
+
+        protected Product()
+        { 
+        }
+
         public virtual int Id { get; protected set; }
         public virtual string Name { get; protected set; }
         public virtual string Type { get; protected set; }
