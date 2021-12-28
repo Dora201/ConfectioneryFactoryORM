@@ -1,11 +1,11 @@
 ﻿namespace ConfectioneryFactory.Demo
 {
     using System;
-    using System.Configuration;
     using System.Linq;
-
-    using ConfectioneryFactory.Domain;
     using ConfectioneryFactory.DataAccess;
+    using ConfectioneryFactory.DataAccess.Repositories;
+    using ConfectioneryFactory.Domain;
+
 
     /// <summary>
     /// Точка входа в программу.
@@ -14,52 +14,48 @@
     {
         static void Main(string[] args)
         {
-            var ingredient = new Ingredient(1, "Мука", 70);
-            var product = new Product(1, "Сладкоежка", "Пончик", 100, ingredient);
-            
+            var ingredient1 = new Ingredient(1, "Мука", 70);
+            var ingredient2 = new Ingredient(2, "Сахар", 40);
+            var ingredient3 = new Ingredient(3, "Молоко", 100);
+            var ingredient4 = new Ingredient(4, "Масло", 200);
+            var product1 = new Product(1, "Сладкоежка", "Пончик", 100, ingredient1, ingredient2, ingredient4);
+            var product2 = new Product(2, "Зима", "Эклер", 150, ingredient1, ingredient2, ingredient3);
+            var product3 = new Product(3, "Карамель", "Леденец", 150);
 
-            Console.WriteLine($"{product} \t {ingredient}");
+
+            Console.WriteLine($"{product1}");
+            Console.WriteLine($"{product2}");
+            Console.WriteLine($"{product3}");
 
             var settings = new Settings();
 
             settings.AddDatabaseServer(@"DESKTOP-REIQ8I1\SQLEXPRESS");
 
-            settings.AddDatabaseName("ConfectioneryFactory");
+            settings.AddDatabaseName("SecureConFactory");
 
             using var sessionFactory = Configurator.GetSessionFactory(settings, showSql: true);
 
             using (var session = sessionFactory.OpenSession())
             {
-                session.Save(product);
-                session.Save(ingredient);
+                session.Save(ingredient1);
+                session.Save(ingredient2);
+                session.Save(ingredient3);
+                session.Save(ingredient4);
+
+                session.Save(product1);
+                session.Save(product2);
                 session.Flush();
             }
 
             using (var session = sessionFactory.OpenSession())
             {
-                var tmpProduct = session.Query<Product>().First();
+                var repoProduct = new ProductRepository();
 
-                Console.WriteLine(tmpProduct);
-            }
-
-            using (var session = sessionFactory.OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    session.Clear();
-                    var persistentIngredient = session.Load<Ingredient>(1);
-                    var newProduct = persistentIngredient.Products.FirstOrDefault();
-                    if (newProduct is null)
-                    {
-                        throw new ArgumentNullException(nameof(newProduct));
-                    }
-
-                    var persistentProduct = session.Get<Product>(newProduct.Id);
-                    session.Delete(persistentProduct);
-                    transaction.Commit();
-                }
-
-                session.Flush();
+                var repoIngredient = new IngredientRepository();
+                Console.WriteLine("All ingredients");
+                repoIngredient.GetAll(session)
+                    .ToList().ForEach(Console.WriteLine);
+                Console.WriteLine(new string('-', 25));
             }
         }
     }

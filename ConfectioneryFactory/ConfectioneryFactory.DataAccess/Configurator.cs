@@ -1,11 +1,12 @@
-﻿using System.Reflection;
-using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
-using NHibernate;
-using NHibernate.Tool.hbm2ddl;
-
-namespace ConfectioneryFactory.DataAccess
+﻿namespace ConfectioneryFactory.DataAccess
 {
+    using System.Reflection;
+    using FluentNHibernate.Cfg;
+    using FluentNHibernate.Cfg.Db;
+    using NHibernate;
+    using NHibernate.Cfg;
+    using NHibernate.Tool.hbm2ddl;
+
     /// <summary>
     /// Настройщик подключения к БД и поставщик фабрики сессий.
     /// </summary>
@@ -17,12 +18,12 @@ namespace ConfectioneryFactory.DataAccess
         private static FluentConfiguration fluentConfiguration;
 
         /// <summary>
-        /// Генерирует фабрику сессий (<see cref="ISessionFactory"/>")
+        /// Генерирует фабрику сессий (<see cref="ISessionFactory"/>).
         /// </summary>
-        /// <param name="settings">Настройки.</param>
-        /// <param name="assembly">Целевая сборка.</param>
-        /// <param name="showSql">Показывает генерируемый SQL-код.</param>
-        /// <returns>Фабрику сессий. </returns>
+        /// <param name="settings"> Настройки. </param>
+        /// <param name="assembly"> Целевая сборка. </param>
+        /// <param name="showSql"> Показывать генерируемый SQL-код. </param>
+        /// <returns> Фабрику сессий. </returns>
         public static ISessionFactory GetSessionFactory(
             Settings settings,
             Assembly assembly = null,
@@ -35,10 +36,10 @@ namespace ConfectioneryFactory.DataAccess
         /// <summary>
         /// Возвращаем конфигурацию по правилам.
         /// </summary>
-        /// <param name="settings">Установки названия сервера БД и имени БД. </param>
-        /// <param name="assembly">Целевая сборка. </param>
-        /// <param name="showSql">Показывает генерируемый SQL-код. </param>
-        /// <returns>Конфигурацию по правилам. </returns>
+        /// <param name="settings"> Установки названия сервера БД и имени БД. </param>
+        /// <param name="assembly"> Целевая сборка. </param>
+        /// <param name="showSql"> Показывать генерируемый SQL-код. </param>
+        /// <returns> конфигурацию по правилам. </returns>
         private static FluentConfiguration GetConfiguration(
             Settings settings,
             Assembly assembly,
@@ -53,7 +54,9 @@ namespace ConfectioneryFactory.DataAccess
                         .TrustedConnection());
 
                 if (showSql)
+                {
                     databaseConfiguration = databaseConfiguration.ShowSql().FormatSql();
+                }
 
                 fluentConfiguration = Fluently.Configure()
                     .Database(databaseConfiguration)
@@ -69,7 +72,7 @@ namespace ConfectioneryFactory.DataAccess
         /// </summary>
         /// <remarks> Необходимо только для создания схемы БД из ничего. </remarks>
         /// <param name="configuration"> Конфигурация ORM, содержащая правила отображения. </param>
-        private static void BuildSchema(NHibernate.Cfg.Configuration configuration)
+        private static void BuildSchema(Configuration configuration)
         {
             new SchemaExport(configuration).Execute(true, true, false);
         }

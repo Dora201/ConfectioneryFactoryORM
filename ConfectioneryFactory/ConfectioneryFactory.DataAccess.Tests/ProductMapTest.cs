@@ -1,9 +1,9 @@
-﻿using FluentNHibernate.Testing;
-using ConfectioneryFactory.Domain;
-using NUnit.Framework;
-
-namespace ConfectioneryFactory.DataAccess.Tests
+﻿namespace ConfectioneryFactory.DataAccess.Tests
 {
+    using FluentNHibernate.Testing;
+    using ConfectioneryFactory.Domain;
+    using NUnit.Framework;
+
     [TestFixture]
     internal class ProductMapTest : BaseMapTests
     {

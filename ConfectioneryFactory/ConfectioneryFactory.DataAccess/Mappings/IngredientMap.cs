@@ -1,8 +1,8 @@
-﻿using FluentNHibernate.Mapping;
-using ConfectioneryFactory.Domain;
-
-namespace ConfectioneryFactory.DataAccess.Mappings
+﻿namespace ConfectioneryFactory.DataAccess.Mappings
 {
+    using FluentNHibernate.Mapping;
+    using ConfectioneryFactory.Domain;
+
     /// <summary>
     /// Класс, описывающий правила отображения <see cref="Ingredient"/> на таблицу в БД и наоборот.
     /// </summary>
@@ -19,6 +19,9 @@ namespace ConfectioneryFactory.DataAccess.Mappings
 
             this.Map(x => x.Price)
                 .Not.Nullable();
+
+            this.HasManyToMany(x => x.Products)
+                .Cascade.Delete();
         }
     }
 }
