@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ConfectioneryFactory.Staff.Extensions;
-
-namespace ConfectioneryFactory.Domain
+﻿namespace ConfectioneryFactory.Domain
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using ConfectioneryFactory.Staff.Extensions;
+
     public class Product
     {
         public Product(int id, string name, string type, int price, params Ingredient[] ingredients)
@@ -12,7 +12,7 @@ namespace ConfectioneryFactory.Domain
         {
         }
 
-        public Product(int id, string name, string type, int price, HashSet<Ingredient> ingredients)
+        public Product(int id, string name, string type, int price, ISet<Ingredient> ingredients = null)
         {
             this.Id = id;
 
@@ -38,8 +38,19 @@ namespace ConfectioneryFactory.Domain
         public virtual string Type { get; protected set; }
         public virtual int Price { get; protected set; }
 
-        public virtual HashSet<Ingredient> Ingredients { get; protected set; } = new HashSet<Ingredient>();
+        public virtual ISet<Ingredient> Ingredients { get; protected set; } = new HashSet<Ingredient>();
 
-        public override string ToString() => $"{Id}) {Type} <<{Name}>> - {Price}";
+        public override string ToString()
+        {
+            string result = $"{Id}) {Type} <<{Name}>> - {Price}р";
+            if (Ingredients.Count != 0)
+            {
+                result += "(Ингредиенты:";
+                foreach (var ingredient in Ingredients)
+                    result += $" {ingredient}";
+                result += ")";
+            }
+            return result;
+        }
     }
 }

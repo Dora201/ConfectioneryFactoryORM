@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using ConfectioneryFactory.Staff.Extensions;
-
-namespace ConfectioneryFactory.Domain
+﻿namespace ConfectioneryFactory.Domain
 {
-    public class Ingredient
+    using System;
+    using System.Collections.Generic;
+    using ConfectioneryFactory.Staff.Extensions;
+
+    public class Ingredient : IEquatable<Ingredient>
     {
 
         public Ingredient(int id, string name, int price)
@@ -27,14 +27,14 @@ namespace ConfectioneryFactory.Domain
         public virtual string Name { get; protected set; }
         public virtual int Price { get; protected set; }
 
-        public virtual HashSet<Product> Products { get; protected set; } = new HashSet<Product>();
+        public virtual ISet<Product> Products { get; protected set; } = new HashSet<Product>();
 
         public virtual bool AddProduct(Product product)
         {
             return product == null ? throw new ArgumentNullException(nameof(product)) : this.Products.Add(product);
         }
 
-        public override string ToString() => $"{Id}) {Name} - {Price}";
+        public override string ToString() => $"{Id}. {Name} - {Price}р";
 
         public override bool Equals(object obj)
         {

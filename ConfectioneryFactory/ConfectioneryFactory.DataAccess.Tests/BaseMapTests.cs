@@ -1,9 +1,8 @@
-using NHibernate;
-using NUnit.Framework;
-
-
 namespace ConfectioneryFactory.DataAccess.Tests
 {
+    using NHibernate;
+    using NUnit.Framework;
+
     public class BaseMapTests
     {
         protected ISession Session { get; private set; }

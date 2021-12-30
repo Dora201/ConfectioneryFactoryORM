@@ -1,12 +1,12 @@
-﻿using System.Reflection;
-using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
-using NHibernate;
-using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
-
-namespace ConfectioneryFactory.DataAccess
+﻿namespace ConfectioneryFactory.DataAccess
 {
+    using System.Reflection;
+    using FluentNHibernate.Cfg;
+    using FluentNHibernate.Cfg.Db;
+    using NHibernate;
+    using NHibernate.Cfg;
+    using NHibernate.Tool.hbm2ddl;
+
     public class TestConfigurator
     {
         private static Configuration configuration;
